@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tt_sign_in"
+        android:background="@color/colorPrimary"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideOverlay"
+        tools:context=".ConnectionActivity_">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/tf_email"
+                    style="@style/Et_White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:padding="5dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/tf_password"
+                    style="@style/Et_White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:padding="5dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tt_forgotten_password"
+                style="@style/Tt_White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="8dp"
+                android:text="@string/forgotten_password" />
+
+
+            <com.rey.material.widget.ProgressView
+                android:id="@+id/progress"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="20dp"
+                app:pv_autostart="false"
+                app:pv_circular="true"
+                app:pv_progressMode="indeterminate"
+                app:pv_progressStyle="@style/CircularProgressDrawableStyle" />
+
+
+            <com.rey.material.widget.Button
+                android:id="@+id/bt_connect"
+                style="@style/Bt_Connect_Sign"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bt_height"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bt_sign"
+                android:text="@string/connection"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+                android:textColor="@color/colorTextIcons"
+                app:rd_delayClick="afterRelease" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_sign_in_with_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_facebook"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@mipmap/ic_facebook" />
+
+                <TextView
+                    style="@style/Tt_White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="Se connecter avec Facebook"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sign_in_with_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/color_twitter"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@mipmap/ic_twitter" />
+
+                <TextView
+                    style="@style/Tt_White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Se connecter avec Twitter"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tt_sign_in"
+        style="@style/Tt_White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:text="S'inscrire sur FindPartner"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
+
+</RelativeLayout>

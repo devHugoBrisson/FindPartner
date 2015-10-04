@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">FindPartner</string>
+
+    <!-- Information editable  -->
+    <string name="name_and_surname">Nom et prénom</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm_password">Confirmation</string>
+    <string name="condition_using">Lu et accepte les conditions d\'utilisation</string>
+    <string name="birth_date">Date de naissance</string>
+    <string name="man">Homme</string>
+    <string name="woman">Femme</string>
+    <string name="city">Ville</string>
+    <string name="postal_code">CP</string>
+    <string name="adress">Adresse</string>
+
+    <!-- Title public data -->
+    <string name="your_birthdate">Votre date de naissance</string>
+    <string name="your_identity">Votre identité</string>
+    <string name="your_gender">Votre Sexe</string>
+
+
+    <!-- Error -->
+    <string name="error_invalid_connect">Email et/ou mot de passe incorrect</string>
+    <string name="error_internet">Une Erreur est survenue . Verifiez votre connexion internet</string>
+    <string name="error_insert_data_in_base">Erreur de lors de l\'insertion en base</string>
+    <string name="error_delete_data_in_base">Erreur de lors de la suppresion en base</string>
+    <string name="error_choose_sport">Vous devez au moins choisir un sport</string>
+    <string name="no_connection">Aucune connexion internet</string>
+
+    <!-- Subtitle -->
+    <string name="using_account">Votre compte vous permettra d\'acceder aux fonctionnalités de TeamMate.Veuillez renseignez vos informations réelles afin de faciliter l\'utilisation de TeamMate et de ces TeamMaters.</string>
+    <string name="using_information">Vos informations personnelles permettront aux TeamMaters + text a trouver </string>
+
+    <!-- Interface -->
+    <string name="connection">Connexion</string>
+    <string name="forgotten_password">Mot de passe oublié ?</string>
+    <string name="cancel">Annuler</string>
+
+
+    <!-- Title Bar -->
+    <string name="sign_first_step">Création de votre compte</string>
+    <string name="sign_second_step">Informations personnelles</string>
+    <string name="sign_third_step">Choix de vos sports favoris</string>
+
+
+    <string name="teammate_join">Rejoignez TeamMate</string>
+    <string name="error_mail">Email incorrecte</string>
+    <string name="error_username">Nom et/ou prénom incorrecte</string>
+    <string name="error_password">Mot de passe incorrect</string>
+    <string name="error_cgu">"Les cgu ne sont pas cochées "</string>
+    <string name="error_birthdate">Date d\'anniversaire incorrecte</string>
+    <string name="error_gender">Aucun Sexe sélectionné</string>
+    <string name="name">Nom</string>
+    <string name="surname">Prénom</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="menu_home">Accueil</string>
+    <string name="menu_sports">Sports</string>
+    <string name="menu_events">Evénements</string>
+    <string name="menu_partners">Partenaires</string>
+    <string name="menu_notification">Notifications</string>
+    <string name="menu_settings">Paramètres</string>
+
+    <string name="menu_exit">Quitter</string>
+
+
+    <array name="nav_title">
+        <item>@string/menu_home</item>
+        <item>@string/menu_sports</item>
+        <item>@string/menu_events</item>
+        <item>@string/menu_partners</item>
+        <item>@string/menu_notification</item>
+        <item>@string/menu_settings</item>
+    </array>
+
+    <array name="nav_icon">
+        <item>@mipmap/ic_home</item>
+        <item>@mipmap/ic_sport</item>
+        <item>@mipmap/ic_event</item>
+        <item>@mipmap/ic_partner</item>
+        <item>@mipmap/ic_message</item>
+        <item>@mipmap/ic_setting</item>
+    </array>
+
+</resources>

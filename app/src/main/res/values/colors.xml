@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- theme color -->
+    <color name="colorPrimary">#5EB6DD</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorPrimaryLight">#B3E5FC</color>
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorAccent">#9E9E9E</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#727272</color>
+    <color name="colorDivider">#B6B6B6</color>
+
+    <!-- a tester -->
+    <color name="colorControlNormal">#FF78909C</color>
+    <color name="colorControlActivated">#FF03A9F4</color>
+    <color name="colorSwitchThumbNormal">#FF78909C</color>
+
+    <!-- shades primary dark -->
+    <color name="colorShadePrimaryDark3">#015785</color>
+    <color name="colorShadePrimaryDark2">#02679e</color>
+    <color name="colorShadePrimaryDark1">#0278b8</color>
+    <color name="colorShadePrimaryDark01">#0298ea</color>
+    <color name="colorShadePrimaryDark02">#09a7fd</color>
+    <color name="colorShadePrimaryDark03">#23b0fd</color>
+
+    <color name="colorError">#FFFF0000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_no_focus">#e5e5e5</color>
+    <color name="black">#ff000000</color>
+
+<color name="color_facebook">#3b5998</color>
+<color name="color_twitter">#00aced</color>
+
+</resources>

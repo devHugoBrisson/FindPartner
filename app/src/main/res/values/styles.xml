@@ -1,0 +1,110 @@
+<resources>
+
+    <style name="Et_White" parent="Material.Widget.EditText">
+        <item name="android:textSize">@dimen/abc_text_size_body_1_material</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/background_et_white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Et_Normal" parent="Material.Widget.EditText">
+        <item name="android:textSize">@dimen/abc_text_size_body_1_material</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="Tt_Title">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
+    <style name="Tt_SubTitle">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+    <style name="Tt_nav_title">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+    </style>
+
+
+    <style name="Iv_SubTitle">
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="Tt_Description">
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+    </style>
+
+    <style name="Tt_Error">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:textColor">@color/colorError</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+
+    <style name="Tt_White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
+    <style name="Bt_Connect_Sign" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="android:background">@drawable/bt_sign</item>
+        <item name="rd_rippleColor">@color/colorShadePrimaryDark1</item>
+        <item name="rd_leftPadding">1dp</item>
+        <item name="rd_topPadding">1dp</item>
+        <item name="rd_rightPadding">1dp</item>
+        <item name="rd_bottomPadding">2dp</item>
+    </style>
+
+    <style name="LinearProgressDrawableStyle" parent="Material.Drawable.LinearProgress">
+        <item name="lpd_strokeSecondaryColor">@color/white</item>
+    </style>
+
+    <style name="CircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/white</item>
+    </style>
+
+    <style name="ButtonCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="CircularProgressStyle" parent="Material.Drawable.CircularProgress">
+        <item name="cpd_strokeColor">@color/colorPrimary</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="FloatingColorActionButton" parent="Material.Drawable.Ripple.Touch.Light">
+
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_gravity">bottom|right</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@mipmap/ic_check</item>
+
+    </style>
+
+    <style name="RadioButtonDrawable" parent="Material.Drawable.RadioButton" />
+
+    <style name="CheckBoxDrawable" parent="Material.Drawable.CheckBox" />
+
+    <style name="SimpleDialogLight" parent="Material.App.Dialog.Simple.Light">
+        <item name="di_inAnimation">@anim/anim_scale_in</item>
+        <item name="di_outAnimation">@anim/anim_scale_out</item>
+    </style>
+
+</resources>

@@ -1,9 +1,9 @@
 package com.hugobrisson.findpartner.view.enrollement;
 
-import android.app.Fragment;
-
+import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.res.StringRes;
 
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.hugobrisson.findpartner.utils.IParseCallBack;
@@ -14,9 +14,11 @@ import com.hugobrisson.findpartner.manager.ErrorManager;
 import com.hugobrisson.findpartner.manager.SnackBarManager;
 import com.hugobrisson.findpartner.manager.UserManager;
 import com.hugobrisson.findpartner.model.User;
+import com.hugobrisson.findpartner.view.FragmentController;
+import com.hugobrisson.findpartner.view.home.HomeActivity_;
 import com.rey.material.widget.CheckBox;
+import com.rey.material.widget.RadioButton;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -26,8 +28,8 @@ import org.androidannotations.annotations.ViewById;
 /**
  * Created by hugo on 28/05/2015.
  */
-@EFragment(R.layout.fragment_private_data_one)
-public class StepPrivateDataFragment extends Fragment {
+@EFragment(R.layout.fragment_sign_in)
+public class SignInFragment extends FragmentController {
 
     @ViewById(R.id.et_email)
     EditText etMail;
@@ -37,6 +39,12 @@ public class StepPrivateDataFragment extends Fragment {
 
     @ViewById(R.id.et_surname)
     EditText etSurname;
+
+    @ViewById(R.id.rb_man)
+    RadioButton rbMan;
+
+    @ViewById(R.id.rb_woman)
+    RadioButton rbWoman;
 
     @ViewById(R.id.et_password)
     EditText etPassword;
@@ -65,9 +73,12 @@ public class StepPrivateDataFragment extends Fragment {
     @Bean
     FragmentTransitionManager fragmentManager;
 
-    @AfterInject()
-    void configure() {
-        getActivity().setTitle(getString(R.string.sign_first_step));
+    @CheckedChange({R.id.rb_man, R.id.rb_woman})
+    void checkedChangedOnSomeCheckBox(CompoundButton rbButton, boolean isChecked) {
+        if (isChecked) {
+            rbMan.setChecked(rbMan == rbButton);
+            rbWoman.setChecked(rbWoman == rbButton);
+        }
     }
 
     @Click(R.id.bt_float_step)
@@ -77,6 +88,7 @@ public class StepPrivateDataFragment extends Fragment {
         String surname = etSurname.getText().toString();
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
+        boolean isMan = rbMan.isChecked();
 
         if (errorManager.allErrorForPrivateData(getView(), mail, name, surname, password, confirmPassword)) {
             if (!cbCgu.isChecked()) {
@@ -89,12 +101,17 @@ public class StepPrivateDataFragment extends Fragment {
                 user.setPassword(password);
                 user.setFirstName(surname);
                 user.setLastName(name);
+                if (isMan) {
+                    user.setGender("Homme");
+                } else {
+                    user.setGender("Femme");
+                }
 
                 userManager.signUp(user, new IParseCallBack() {
                     @Override
                     public void onSuccess() {
                         buttonProgress.stop();
-                        fragmentManager.changeFragment(getFragmentManager(), StepPrivateDataFragment.this, new StepPublicDataFragment_());
+                        mActivityListener.changeActivity(new HomeActivity_());
                     }
 
                     @Override

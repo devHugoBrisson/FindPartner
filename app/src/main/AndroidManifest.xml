@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <permission
         android:name="com.hugobrisson.findpartner.permission.C2D_MESSAGE"
@@ -16,15 +17,16 @@
     <uses-permission android:name="com.hugobrisson.findpartner.permission.C2D_MESSAGE" />
 
     <application
+        android:hardwareAccelerated="true"
         android:name=".FindPartnerApplication_"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme">
         <activity
-            android:name=".view.ConnectionActivity_"
+            android:name=".view.enrollement.SignInActivity_"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.ConnectTheme"
+            android:theme="@style/Theme.SignTheme"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,12 +40,14 @@
             android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustPan" />
 
+        <!--
         <activity
             android:name=".view.enrollement.SignInActivity_"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.SignTheme"
             android:label="Condition d'utilisation 1/5"
+            android:theme="@style/Theme.SignTheme"
             android:windowSoftInputMode="adjustPan" />
+            !-->
 
 
         <service android:name="com.parse.PushService" />
@@ -75,6 +79,14 @@
                 <category android:name="com.hugobrisson.findpartner" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCwjYt1Q4sh58NS1gGf37PIZMLaBw6HydI" />
 
     </application>
 

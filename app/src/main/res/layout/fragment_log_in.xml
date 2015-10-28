@@ -2,19 +2,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:contentDescription="logo" />
+
+    </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scrollView_connect"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/tt_sign_in"
-        android:background="@color/colorPrimary"
-        android:fillViewport="true"
+        android:layout_below="@id/layout_logo"
         android:scrollbarStyle="outsideOverlay"
         tools:context=".ConnectionActivity_">
 
         <LinearLayout
+            android:id="@+id/ll_connect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -23,38 +38,44 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
                     android:id="@+id/tf_email"
-                    style="@style/Et_White"
+                    style="@style/Et_Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:padding="5dp" />
+                    android:padding="2dp"
+                    android:translationY="2dp" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="10dp"
+                android:textColorHint="@color/white"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
                     android:id="@+id/tf_password"
-                    style="@style/Et_White"
+                    style="@style/Et_Blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
-                    android:padding="5dp" />
+                    android:padding="2dp"
+                    android:translationY="2dp" />
 
             </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/tt_forgotten_password"
-                style="@style/Tt_White"
+                style="@style/Tt_Bleu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -97,6 +118,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription=""
                     android:src="@mipmap/ic_facebook" />
 
                 <TextView
@@ -121,6 +143,7 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription=""
                     android:src="@mipmap/ic_twitter" />
 
                 <TextView
@@ -130,16 +153,15 @@
                     android:layout_gravity="center_vertical"
                     android:text="Se connecter avec Twitter"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
-
-
             </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
 
+
     <TextView
         android:id="@+id/tt_sign_in"
-        style="@style/Tt_White"
+        style="@style/Tt_Bleu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

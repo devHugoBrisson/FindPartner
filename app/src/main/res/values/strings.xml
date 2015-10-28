@@ -63,6 +63,8 @@
     <string name="menu_settings">Paramètres</string>
 
     <string name="menu_exit">Quitter</string>
+    <string name="event_title">Titre de l\'événement</string>
+    <string name="tt_places">Adresse,Lieu</string>
 
 
     <array name="nav_title">

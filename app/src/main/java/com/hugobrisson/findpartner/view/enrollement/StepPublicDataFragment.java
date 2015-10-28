@@ -5,12 +5,26 @@ import android.app.Fragment;
 
 import org.androidannotations.annotations.res.StringRes;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.hugobrisson.findpartner.adapter.PlaceArrayAdapter;
 import com.hugobrisson.findpartner.utils.IParseCallBack;
 import com.hugobrisson.findpartner.R;
 
@@ -57,14 +71,8 @@ public class StepPublicDataFragment extends Fragment {
     @ViewById(R.id.tt_birthdate)
     TextView ttBirthdate;
 
-    @ViewById(R.id.rb_man)
-    RadioButton rbMan;
-
-    @ViewById(R.id.rb_woman)
-    RadioButton rbWoman;
-
     @ViewById(R.id.autoCompleteTextView)
-    AutoCompleteTextView acttAddress;
+    AutoCompleteTextView mAutoCompleteAdress;
 
     @ViewById(R.id.bt_progress)
     ButtonProgress buttonProgress;
@@ -74,9 +82,41 @@ public class StepPublicDataFragment extends Fragment {
 
     User newUser;
 
+    private int clientId = 0;
+
+    private GoogleApiClient mGoogleApiClient;
+
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+
     @AfterInject()
     void inject() {
         getActivity().setTitle(title);
+        if (getActivity() instanceof SignInActivity_) {
+            SignInActivity_ mSignInActivity = (SignInActivity_) getActivity();
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addApi(Places.GEO_DATA_API)
+                    .enableAutoManage(mSignInActivity, clientId, new GoogleApiClient.OnConnectionFailedListener() {
+                        @Override
+                        public void onConnectionFailed(ConnectionResult connectionResult) {
+
+                        }
+                    })
+                    .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                        @Override
+                        public void onConnected(Bundle bundle) {
+                            mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+                        }
+
+                        @Override
+                        public void onConnectionSuspended(int i) {
+
+                        }
+                    })
+                    .build();
+        }
     }
 
     @AfterViews()
@@ -85,7 +125,40 @@ public class StepPublicDataFragment extends Fragment {
         if (newUser == null) {
             //TODO error and come back fragment.
         }
+        mAutoCompleteAdress.setThreshold(3);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(getActivity(), R.layout.address_item, BOUNDS_MOUNTAIN_VIEW, null);
+        mAutoCompleteAdress.setAdapter(mPlaceArrayAdapter);
     }
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i("test", "Selected: " + item.description);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i("test", "Fetching details for ID: " + item.placeId);
+        }
+    };
+
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e("test", "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
+            }
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+        }
+    };
+
 
     @Click(R.id.tt_birthdate)
     void clickedBirthDate() {
@@ -110,21 +183,14 @@ public class StepPublicDataFragment extends Fragment {
 
     }
 
-    @CheckedChange({R.id.rb_man, R.id.rb_woman})
-    void checkedChangedOnSomeCheckBoxs(CompoundButton rbButton, boolean isChecked) {
-        if (isChecked) {
-            rbMan.setChecked(rbMan == rbButton);
-            rbWoman.setChecked(rbWoman == rbButton);
-        }
-    }
 
     @Click(R.id.bt_float_step)
     void click() {
         buttonProgress.start();
 
         String birthDate = ttBirthdate.getText().toString();
-        boolean isMan = rbMan.isChecked();
-        boolean isWoman = rbWoman.isChecked();
+        boolean isMan = true;
+        boolean isWoman = true;
 
         if (errorManager.allErrorForPublicData(getView(), birthDate, isMan, isWoman)) {
             SimpleDateFormat textFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -146,7 +212,7 @@ public class StepPublicDataFragment extends Fragment {
                 @Override
                 public void onSuccess() {
                     buttonProgress.stop();
-                    fragmentManager.changeFragment(getFragmentManager(), StepPublicDataFragment.this, new StepSportFragment_(), newUser.getObjectId());
+                    // fragmentManager.changeFragment(getFragmentManager(), StepPublicDataFragment.this, new StepSportFragment_(), newUser.getObjectId());
                 }
 
                 @Override

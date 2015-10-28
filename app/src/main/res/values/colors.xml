@@ -28,7 +28,7 @@
     <color name="white_no_focus">#e5e5e5</color>
     <color name="black">#ff000000</color>
 
-<color name="color_facebook">#3b5998</color>
-<color name="color_twitter">#00aced</color>
+    <color name="color_facebook">#3b5998</color>
+    <color name="color_twitter">#00aced</color>
 
 </resources>

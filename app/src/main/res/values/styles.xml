@@ -3,7 +3,7 @@
     <style name="Et_Blue" parent="Material.Widget.EditText">
         <item name="android:textSize">@dimen/textSizeConnect</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/background_et_blue</item>
+        <item name="android:background">@drawable/background_blue</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -28,10 +28,7 @@
     </style>
 
     <style name="Tt_SubTitle">
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:padding">2dp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
@@ -43,6 +40,7 @@
 
     <style name="Iv_SubTitle">
         <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="Tt_Description">

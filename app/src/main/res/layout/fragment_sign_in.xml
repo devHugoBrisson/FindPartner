@@ -27,10 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textSize="20sp"
+                android:text="Inscription"
                 android:textColor="@color/black"
-                android android:textStyle="bold"
-                android:text="Inscription" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -48,6 +48,67 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_grey_blue"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Iv_SubTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:src="@mipmap/ic_wc_black_24dp" />
+
+                        <TextView
+                            style="@style/Tt_SubTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/your_gender" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.rey.material.widget.RadioButton
+                            android:id="@+id/rb_man"
+                            style="@style/RadioButtonDrawable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:checked="true"
+                            android:textColor="@color/white"
+                            android:gravity="center_vertical"
+                            android:text="@string/man"
+                            android:textSize="14sp" />
+
+                        <com.rey.material.widget.RadioButton
+                            android:id="@+id/rb_woman"
+                            style="@style/RadioButtonDrawable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/white"
+                            android:text="@string/woman"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -92,35 +153,6 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.rey.material.widget.RadioButton
-                        android:id="@+id/rb_man"
-                        style="@style/RadioButtonDrawable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:checked="true"
-                        android:gravity="center_vertical"
-                        android:text="@string/man"
-                        android:textSize="14sp" />
-
-                    <com.rey.material.widget.RadioButton
-                        android:id="@+id/rb_woman"
-                        style="@style/RadioButtonDrawable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="false"
-                        android:gravity="center_vertical"
-                        android:text="@string/woman"
-                        android:textSize="14sp" />
-                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

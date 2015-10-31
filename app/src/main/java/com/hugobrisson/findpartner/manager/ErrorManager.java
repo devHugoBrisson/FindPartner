@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import org.androidannotations.annotations.res.StringRes;
 
 import android.view.View;
+import android.widget.EditText;
 
 import com.hugobrisson.findpartner.R;
 
@@ -136,12 +137,14 @@ public class ErrorManager {
      * @param confirmPassword
      * @return
      */
-    public boolean allErrorForPrivateData(View view, String mail, String name, String surname, String password, String confirmPassword) {
-        if (!validateMail(mail)) {
+    public boolean allErrorSignIn(View view, EditText mail, EditText name, EditText surname, EditText password, EditText confirmPassword) {
+        mail.setError("mail error");
+        if (!validateMail(mail.getText().toString())) {
+            mail.setError(errorMail);
             snackBarManager.show(view, errorMail);
-        } else if (!validUsername(name, surname)) {
+        } else if (!validUsername(name.getText().toString(), surname.getText().toString())) {
             snackBarManager.show(view, errorUsername);
-        } else if (!validPassword(password, confirmPassword)) {
+        } else if (!validPassword(password.getText().toString(), confirmPassword.getText().toString())) {
             snackBarManager.show(view, errorPassword);
         } else {
             return true;

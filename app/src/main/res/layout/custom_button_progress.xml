@@ -5,15 +5,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/bt_float_step"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/bt_float_step"
         style="@style/FloatingColorActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:src="@mipmap/ic_check"
-        app:backgroundTint="@color/colorPrimary"
-        app:elevation="0dp" />
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:elevation="5dp" />
 
     <com.rey.material.widget.ProgressView
         android:id="@+id/progress_wait"

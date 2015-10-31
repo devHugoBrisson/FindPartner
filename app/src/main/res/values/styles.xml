@@ -16,6 +16,7 @@
         <item name="android:textSize">@dimen/abc_text_size_body_1_material</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:drawablePadding">@dimen/drawablePadding</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:gravity">center</item>
     </style>
 

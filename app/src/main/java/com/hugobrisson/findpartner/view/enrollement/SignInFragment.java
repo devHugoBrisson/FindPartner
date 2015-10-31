@@ -90,7 +90,7 @@ public class SignInFragment extends FragmentController {
         String confirmPassword = etConfirmPassword.getText().toString();
         boolean isMan = rbMan.isChecked();
 
-        if (errorManager.allErrorForPrivateData(getView(), mail, name, surname, password, confirmPassword)) {
+        if (errorManager.allErrorSignIn(getView(), etMail, etName, etSurname, etPassword, etConfirmPassword)) {
             if (!cbCgu.isChecked()) {
                 snackBarManager.show(getView(), errorCGU);
             } else {

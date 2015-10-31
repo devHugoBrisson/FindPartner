@@ -16,8 +16,8 @@
 
     <!-- Title public data -->
     <string name="your_birthdate">Votre date de naissance</string>
-    <string name="your_identity">Votre identité</string>
-    <string name="your_gender">Votre Sexe</string>
+    <string name="your_identity">Mon identité</string>
+    <string name="your_gender">Mon Sexe</string>
 
 
     <!-- Error -->

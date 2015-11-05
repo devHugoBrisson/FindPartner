@@ -67,6 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:textColorHighlight="@color/white"
                     android:inputType="textPassword"
                     android:padding="2dp"
                     android:translationY="2dp" />

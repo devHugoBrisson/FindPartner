@@ -1,12 +1,18 @@
 package com.hugobrisson.findpartner.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 
+import com.hugobrisson.findpartner.manager.ErrorManager;
+import com.hugobrisson.findpartner.manager.FragmentTransitionManager;
+import com.hugobrisson.findpartner.manager.SnackBarManager;
+import com.hugobrisson.findpartner.manager.UserManager;
 import com.hugobrisson.findpartner.utils.ActivityListener;
 
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 
 /**
@@ -17,16 +23,24 @@ public class FragmentController extends Fragment {
 
     protected ActivityListener mActivityListener;
 
+    @Bean
+    protected ErrorManager errorManager;
+
+    @Bean
+    protected UserManager userManager;
+
+    @Bean
+    protected SnackBarManager snackBarManager;
+
+
+
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mActivityListener = (ActivityListener) activity;
+            mActivityListener = (ActivityListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement ActivityListener");
+            throw new ClassCastException(context.toString() + " must implement ActivityListener");
         }
     }
-
 }

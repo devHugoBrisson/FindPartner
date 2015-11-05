@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 
 import org.androidannotations.annotations.res.StringRes;
 
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 public class ErrorManager {
 
     private Pattern pattern;
+    private TextInputLayout mCurrentTextInputLayout;
 
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -40,11 +42,17 @@ public class ErrorManager {
     @StringRes(R.string.error_mail)
     String errorMail;
 
-    @StringRes(R.string.error_username)
-    String errorUsername;
+    @StringRes(R.string.error_name)
+    String errorName;
+
+    @StringRes(R.string.error_surname)
+    String errorSurname;
 
     @StringRes(R.string.error_password)
     String errorPassword;
+
+    @StringRes(R.string.error_confirm_password)
+    String errorConfirmPassword;
 
     @StringRes(R.string.error_birthdate)
     String errorBirthDate;
@@ -76,27 +84,30 @@ public class ErrorManager {
      * @param name
      * @return
      */
-    public boolean validUsername(String name, String surname) {
-        if (!"".equals(name) && name.length() >= 2 && !"".equals(surname) && surname.length() >= 2) {
-            return true;
-        }
-        return false;
+    public boolean validUsername(String name) {
+        return !"".equals(name) && name.length() >= 2;
     }
+
 
     /**
      * verify password is validate.
      *
      * @param password
+     * @return
+     */
+    public boolean validPassword(String password) {
+        return !"".equals(password);
+    }
+
+    /**
+     * verify if its the same password.
+     *
+     * @param password
      * @param confirmPassword
      * @return
      */
-    public boolean validPassword(String password, String confirmPassword) {
-        if ("".equals(password) || "".equals(confirmPassword)) {
-            return false;
-        } else if (!password.equals(confirmPassword)) {
-            return false;
-        }
-        return true;
+    public boolean notEqualsPassword(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
     }
 
     /**
@@ -106,30 +117,12 @@ public class ErrorManager {
      * @return
      */
     public boolean validBirthDate(String birthDate) {
-        if (birthDate.equals(context.getResources().getString(R.string.birth_date))) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * verify gender is validate.
-     *
-     * @param isMan
-     * @param isWoman
-     * @return
-     */
-    public boolean validGender(boolean isMan, boolean isWoman) {
-        if (!isMan && !isWoman) {
-            return false;
-        }
-        return true;
+        return !birthDate.equals(context.getResources().getString(R.string.birth_date));
     }
 
     /**
      * looks all error for private data.
      *
-     * @param view
      * @param mail
      * @param name
      * @param surname
@@ -137,20 +130,44 @@ public class ErrorManager {
      * @param confirmPassword
      * @return
      */
-    public boolean allErrorSignIn(View view, EditText mail, EditText name, EditText surname, EditText password, EditText confirmPassword) {
-        mail.setError("mail error");
+    public boolean allErrorSignIn(EditText mail, EditText name, EditText surname, EditText password, EditText confirmPassword) {
+        TextInputLayout til;
         if (!validateMail(mail.getText().toString())) {
-            mail.setError(errorMail);
-            snackBarManager.show(view, errorMail);
-        } else if (!validUsername(name.getText().toString(), surname.getText().toString())) {
-            snackBarManager.show(view, errorUsername);
-        } else if (!validPassword(password.getText().toString(), confirmPassword.getText().toString())) {
-            snackBarManager.show(view, errorPassword);
+            til = (TextInputLayout) mail.getParent();
+            til.setErrorEnabled(true);
+            til.setError(errorMail);
+        } else if (!validUsername(name.getText().toString())) {
+            til = (TextInputLayout) name.getParent();
+            til.setErrorEnabled(true);
+            til.setError(errorName);
+        } else if (!validUsername(surname.getText().toString())) {
+            til = (TextInputLayout) surname.getParent();
+            til.setErrorEnabled(true);
+            til.setError(errorSurname);
+        } else if (!validPassword(password.getText().toString())) {
+            til = (TextInputLayout) password.getParent();
+            til.setErrorEnabled(true);
+            til.setError(errorPassword);
+        } else if (!notEqualsPassword(password.getText().toString(), confirmPassword.getText().toString())) {
+            til = (TextInputLayout) confirmPassword.getParent();
+            til.setErrorEnabled(true);
+            til.setError(errorConfirmPassword);
         } else {
+            mCurrentTextInputLayout = null;
             return true;
         }
 
+        mCurrentTextInputLayout = til;
         return false;
+    }
+
+
+    /**
+     * get current textInputLayout for disable error.
+     * @return
+     */
+    public TextInputLayout getCurrentTextInputLayout() {
+        return mCurrentTextInputLayout;
     }
 
     /**
@@ -165,8 +182,6 @@ public class ErrorManager {
     public boolean allErrorForPublicData(View view, String birthDate, boolean isMan, boolean isWoman) {
         if (!validBirthDate(birthDate)) {
             snackBarManager.show(view, errorBirthDate);
-        } else if (!validGender(isMan, isWoman)) {
-            snackBarManager.show(view, errorGender);
         } else {
             return true;
         }

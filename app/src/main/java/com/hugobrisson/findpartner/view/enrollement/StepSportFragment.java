@@ -12,9 +12,8 @@ import com.hugobrisson.findpartner.utils.ISportCallBack;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.custom.ButtonProgress;
 import com.hugobrisson.findpartner.manager.SportManager;
-import com.hugobrisson.findpartner.adapter.SportAdapter;
+import com.hugobrisson.findpartner.adapter.SportAdapterGrid;
 import com.hugobrisson.findpartner.model.Sport;
-import com.hugobrisson.findpartner.view.home.HomeActivity;
 import com.hugobrisson.findpartner.view.home.HomeActivity_;
 import com.rey.material.widget.ProgressView;
 
@@ -104,11 +103,11 @@ public class StepSportFragment extends Fragment {
      */
     private void init(List<Sport> sports) {
         {
-            SportAdapter sportAdapter = new SportAdapter(getActivity(), sports);
+            SportAdapterGrid sportAdapterGrid = new SportAdapterGrid(getActivity(), sports);
             progressView.stop();
             progressView.setVisibility(View.GONE);
             gvSports.setHasFixedSize(true);
-            gvSports.setAdapter(sportAdapter);
+            gvSports.setAdapter(sportAdapterGrid);
             button.setVisibility(View.VISIBLE);
         }
     }

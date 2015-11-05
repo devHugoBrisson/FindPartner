@@ -5,36 +5,53 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hugobrisson.findpartner.manager.SportManager;
-import com.hugobrisson.findpartner.manager.DisplayManager;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.model.Sport;
-import com.parse.ParseImageView;
+import com.hugobrisson.findpartner.utils.IParseObjectListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hugo on 05/06/2015.
+ * Created by hugo on 04/11/2015.
  */
 public class SportAdapter extends RecyclerView.Adapter<SportAdapter.SportViewHolder> {
 
     Context context;
 
+    IParseObjectListener iParseObjectListener;
+
     List<Sport> sports;
 
-    int size;
+    List<Sport> sortSports = new ArrayList<>();
 
-    public SportAdapter(Context context, List<Sport> sports) {
+    List<Sport> oldSports;
+
+
+    public SportAdapter(Context context, List<Sport> sports, IParseObjectListener iParseObjectListener) {
         this.sports = sports;
+        this.oldSports = sports;
         this.context = context;
-        size = new DisplayManager().getSize(context);
+        this.iParseObjectListener = iParseObjectListener;
+    }
 
+    public void sortList(String charSequence) {
+        sortSports.clear();
+        sports = oldSports;
+        if (!"".equals(charSequence)) {
+            for (Sport sport : sports) {
+                if (sport.getName().toLowerCase().startsWith(charSequence.toLowerCase())) {
+                    sortSports.add(sport);
+                }
+            }
+            if (sortSports != null && sortSports.size() > 0) {
+                sports = sortSports;
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -44,37 +61,15 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.SportViewHol
     }
 
     @Override
-    public void onBindViewHolder(final SportViewHolder holder, int position) {
+    public void onBindViewHolder(SportViewHolder holder, int position) {
         final Sport sport = sports.get(position);
-        holder.pivSport.setMaxWidth(size);
-        holder.pivSport.setMaxHeight(size);
-        holder.pivSport.setPlaceholder(context.getResources().getDrawable(R.mipmap.ic_default_sport));
-
-        if (sport.getParseFile("image") != null) {
-            holder.pivSport.setParseFile(sport.getParseFile("image"));
-            holder.pivSport.loadInBackground();
-        }
-
+        holder.tvNameSport.setText(sport.getName());
         holder.llSport.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Animation animFadeOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
-                Animation animFadeIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                if (sport.isCheck()) {
-                    holder.ivCheck.setAnimation(animFadeOut);
-                    holder.ivCheck.setVisibility(View.INVISIBLE);
-                    sport.setCheck(false);
-                } else {
-                    holder.ivCheck.setAnimation(animFadeIn);
-                    holder.ivCheck.setVisibility(View.VISIBLE);
-                    sport.setCheck(true);
-                }
-                new SportManager().insertOrDeleteFavorites(sport);
+            public void onClick(View view) {
+                iParseObjectListener.onItemCLick(sport);
             }
         });
-
-        holder.ttNameSport.setText(sport.getName());
-
     }
 
     @Override
@@ -84,18 +79,13 @@ public class SportAdapter extends RecyclerView.Adapter<SportAdapter.SportViewHol
 
     public static class SportViewHolder extends RecyclerView.ViewHolder {
 
-        protected ParseImageView pivSport;
-        protected ImageView ivCheck;
         protected LinearLayout llSport;
-        protected TextView ttNameSport;
+        protected TextView tvNameSport;
 
         public SportViewHolder(View itemView) {
             super(itemView);
             llSport = (LinearLayout) itemView.findViewById(R.id.ll_sport);
-            ivCheck = (ImageView) itemView.findViewById(R.id.iv_check_sport);
-            pivSport = (ParseImageView) itemView.findViewById(R.id.iv_sport);
-            ttNameSport = (TextView) itemView.findViewById(R.id.tt_name_sport);
+            tvNameSport = (TextView) itemView.findViewById(R.id.tv_name_sport);
         }
     }
-
 }

@@ -5,7 +5,9 @@ package com.hugobrisson.findpartner.utils;
  */
 public interface IDialogCallBack {
 
-    void positiveAction();
+    void onResultDatePicker(int day, int month, int year);
 
-    void negativeAction();
+    void onResultTimePicker(int hour, int minute);
+
+    void onResultNumberPicker(int number);
 }

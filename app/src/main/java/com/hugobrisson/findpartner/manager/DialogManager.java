@@ -34,13 +34,13 @@ public class DialogManager {
                 builder = new SimpleDialog.Builder(R.style.SimpleDialogLight) {
                     @Override
                     public void onPositiveActionClicked(DialogFragment fragment) {
-                        iDialogCallBack.positiveAction();
+                      //  iDialogCallBack.positiveAction();
                         super.onPositiveActionClicked(fragment);
                     }
 
                     @Override
                     public void onNegativeActionClicked(DialogFragment fragment) {
-                        iDialogCallBack.negativeAction();
+                     //   iDialogCallBack.negativeAction();
                         super.onNegativeActionClicked(fragment);
                     }
                 };

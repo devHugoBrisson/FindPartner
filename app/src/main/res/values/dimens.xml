@@ -6,6 +6,6 @@
     <dimen name="rv_column_width">76dp</dimen>
     <dimen name="sport_image">60dp</dimen>
     <dimen name="textSizeConnect">18sp</dimen>
-
     <dimen name="drawablePadding">-35sp</dimen>
+    <dimen name="title_dialog">24sp</dimen>
 </resources>

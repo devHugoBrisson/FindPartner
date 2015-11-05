@@ -16,6 +16,7 @@ import com.parse.ParseUser;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.ProgressView;
 
+
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -53,7 +54,6 @@ public class LoginFragment extends FragmentController {
 
     @StringRes(R.string.error_invalid_connect)
     String errorConnect;
-
 
     @Click(R.id.bt_connect)
     void clickConnect() {

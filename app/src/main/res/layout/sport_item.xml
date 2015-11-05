@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_sport"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
-
-    <ImageView
-        android:id="@+id/iv_check_sport"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="bottom|right"
-        android:src="@mipmap/sport_check"
-        android:visibility="invisible" />
-
-
-    <com.parse.ParseImageView
-        android:id="@+id/iv_sport"
-        android:layout_width="@dimen/sport_image"
-        android:layout_height="@dimen/sport_image"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:src="@mipmap/ic_default_sport"
-        android:adjustViewBounds="true"
-        android:layout_marginBottom="10dp"/>
-
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tt_name_sport"
+        android:id="@+id/tv_name_sport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:text="Sport"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark" />
 
 </LinearLayout>

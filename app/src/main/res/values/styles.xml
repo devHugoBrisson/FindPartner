@@ -12,12 +12,38 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="TilAppearence.Title" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TilAppearence.Description" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Et_Normal" parent="Material.Widget.EditText">
         <item name="android:textSize">@dimen/abc_text_size_body_1_material</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:drawablePadding">@dimen/drawablePadding</item>
-        <item name="android:layout_margin">10dp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MyAutoCompleteTextView" parent="android:Widget.Holo.Light.AutoCompleteTextView">
+    </style>
+
+    <style name="Til_Title" parent="Material.Widget.EditText">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">-10dp</item>
+    </style>
+
+    <style name="Til_Normal" parent="Material.Widget.EditText">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">-10dp</item>
     </style>
 
 
@@ -105,13 +131,14 @@
         <item name="android:layout_gravity">bottom|right</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:src">@mipmap/ic_check</item>
 
     </style>
 
     <style name="RadioButtonDrawable" parent="Material.Drawable.RadioButton" />
 
-    <style name="CheckBoxDrawable" parent="Material.Drawable.CheckBox" />
+    <style name="CheckBoxDrawable" parent="Material.Drawable.CheckBox">
+
+    </style>
 
     <style name="SimpleDialogLight" parent="Material.App.Dialog.Simple.Light">
         <item name="di_inAnimation">@anim/slide_left_out</item>

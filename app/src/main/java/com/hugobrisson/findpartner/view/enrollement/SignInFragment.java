@@ -1,25 +1,24 @@
 package com.hugobrisson.findpartner.view.enrollement;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.res.StringRes;
 
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.hugobrisson.findpartner.utils.IParseCallBack;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.custom.ButtonProgress;
-import com.hugobrisson.findpartner.manager.FragmentTransitionManager;
-import com.hugobrisson.findpartner.manager.ErrorManager;
-import com.hugobrisson.findpartner.manager.SnackBarManager;
-import com.hugobrisson.findpartner.manager.UserManager;
 import com.hugobrisson.findpartner.model.User;
 import com.hugobrisson.findpartner.view.FragmentController;
 import com.hugobrisson.findpartner.view.home.HomeActivity_;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.RadioButton;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -40,17 +39,17 @@ public class SignInFragment extends FragmentController {
     @ViewById(R.id.et_surname)
     EditText etSurname;
 
-    @ViewById(R.id.rb_man)
-    RadioButton rbMan;
-
-    @ViewById(R.id.rb_woman)
-    RadioButton rbWoman;
-
     @ViewById(R.id.et_password)
     EditText etPassword;
 
     @ViewById(R.id.et_confirm_password)
     EditText etConfirmPassword;
+
+    @ViewById(R.id.rb_man)
+    RadioButton rbMan;
+
+    @ViewById(R.id.rb_woman)
+    RadioButton rbWoman;
 
     @ViewById(R.id.bt_progress)
     ButtonProgress buttonProgress;
@@ -61,17 +60,36 @@ public class SignInFragment extends FragmentController {
     @StringRes(R.string.error_cgu)
     String errorCGU;
 
-    @Bean
-    SnackBarManager snackBarManager;
+    private TextWatcher watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-    @Bean
-    ErrorManager errorManager;
+        }
 
-    @Bean
-    UserManager userManager;
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            TextInputLayout mCurrentTextInputLayout = errorManager.getCurrentTextInputLayout();
+            if (mCurrentTextInputLayout != null) {
+                if (mCurrentTextInputLayout.isErrorEnabled()) {
+                    mCurrentTextInputLayout.setError(null);
+                }
+            }
+        }
 
-    @Bean
-    FragmentTransitionManager fragmentManager;
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    @AfterViews()
+    void configure() {
+        etMail.addTextChangedListener(watcher);
+        etName.addTextChangedListener(watcher);
+        etSurname.addTextChangedListener(watcher);
+        etPassword.addTextChangedListener(watcher);
+        etConfirmPassword.addTextChangedListener(watcher);
+    }
 
     @CheckedChange({R.id.rb_man, R.id.rb_woman})
     void checkedChangedOnSomeCheckBox(CompoundButton rbButton, boolean isChecked) {
@@ -87,12 +105,11 @@ public class SignInFragment extends FragmentController {
         String name = etName.getText().toString();
         String surname = etSurname.getText().toString();
         String password = etPassword.getText().toString();
-        String confirmPassword = etConfirmPassword.getText().toString();
         boolean isMan = rbMan.isChecked();
 
-        if (errorManager.allErrorSignIn(getView(), etMail, etName, etSurname, etPassword, etConfirmPassword)) {
+        if (errorManager.allErrorSignIn(etMail, etName, etSurname, etPassword, etConfirmPassword)) {
             if (!cbCgu.isChecked()) {
-                snackBarManager.show(getView(), errorCGU);
+              //  snackBarManager.show(getView(), errorCGU);
             } else {
                 buttonProgress.start();
                 final User user = new User();
@@ -117,7 +134,7 @@ public class SignInFragment extends FragmentController {
                     @Override
                     public void onFailure() {
                         buttonProgress.stop();
-                        snackBarManager.show(getView(), "erreur lors de l'envoi au serveur");
+                     //   snackBarManager.show(getView(), "erreur lors de l'envoi au serveur");
 
                     }
                 });

@@ -3,4 +3,9 @@
     <declare-styleable name="DateView">
         <attr name="customText" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="EventItem">
+        <attr name="eventIcon" format="integer"/>
+        <attr name="eventText" format="string"/>
+    </declare-styleable>
 </resources>

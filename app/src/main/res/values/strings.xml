@@ -45,10 +45,12 @@
 
 
     <string name="teammate_join">Rejoignez TeamMate</string>
-    <string name="error_mail">Email incorrecte</string>
-    <string name="error_username">Nom et/ou prénom incorrecte</string>
-    <string name="error_password">Mot de passe incorrect</string>
-    <string name="error_cgu">"Les cgu ne sont pas cochées "</string>
+    <string name="error_mail">Votre email incorrecte.</string>
+    <string name="error_name">Votre nom doit être supérieur a deux caractères.</string>
+    <string name="error_surname">Votre prénom doit être supérieur a deux caractères.</string>
+    <string name="error_password">Votre Mot de passe incorrect.</string>
+    <string name="error_confirm_password">Les mots de passes sont différents.</string>
+    <string name="error_cgu">Les cgu ne sont pas cochées</string>
     <string name="error_birthdate">Date d\'anniversaire incorrecte</string>
     <string name="error_gender">Aucun Sexe sélectionné</string>
     <string name="name">Nom</string>

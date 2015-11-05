@@ -15,35 +15,149 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layout_logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/colorPrimaryDark"
+                android:orientation="vertical"
+                android:padding="10dp">
+
 
                 <android.support.design.widget.TextInputLayout
+                    style="@style/Til_Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:textColorHint="@color/white"
+                    app:hintTextAppearance="@style/TilAppearence.Title">
 
                     <EditText
                         android:id="@+id/et_title_event"
-                        style="@style/Et_Normal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Titre de l'événement"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:textColor="@color/white"
+                        android:theme="@style/Theme.EditText" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    style="@style/Til_Normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColorHint="@color/white"
+                    app:hintTextAppearance="@style/TilAppearence.Title">
+
+                    <EditText
+                        android:id="@+id/et_desc_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Description"
+                        android:inputType="text"
+                        android:singleLine="false"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:theme="@style/Theme.EditText" />
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
 
-            <com.hugobrisson.findpartner.custom.DateView
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/sport_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:customText="Date de l'évenement" />
+                app:eventIcon="@mipmap/ic_sport_event"
+                app:eventText="Sport" />
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/calendar_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventIcon="@mipmap/ic_calendar"
+                app:eventText="Date de l'èvénement ?" />
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/time_start_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventIcon="@mipmap/ic_clock"
+                app:eventText="Heure du début ?" />
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/time_end_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventIcon="@mipmap/ic_clock"
+                app:eventText="Heure de fin ?" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_map" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:hint="Lieu de l'èvénement"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/colorSecondaryText"
+                    android:theme="@style/Theme.Normal" />
+
+            </LinearLayout>
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/partner_max_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventIcon="@mipmap/ic_partner_add"
+                app:eventText="Partenaires maximum" />
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/partner_already_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:eventIcon="@mipmap/ic_partner_add"
+                app:eventText="Partenaires déja trouvés" />
+
+
+            <com.rey.material.widget.CheckBox
+                android:id="@+id/cb_free"
+                style="@style/CheckBoxDrawable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:checked="false"
+                android:gravity="center_vertical"
+                android:text="Cet èvénement est payant"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:theme="@style/Theme.Normal" />
+
+            <com.hugobrisson.findpartner.custom.EventItem
+                android:id="@+id/price_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:eventIcon="@mipmap/ic_euro"
+                app:eventText="Prix" />
 
         </LinearLayout>
     </ScrollView>

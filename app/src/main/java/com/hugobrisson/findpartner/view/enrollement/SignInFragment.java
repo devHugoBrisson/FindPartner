@@ -68,7 +68,7 @@ public class SignInFragment extends FragmentController {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            TextInputLayout mCurrentTextInputLayout = errorManager.getCurrentTextInputLayout();
+            TextInputLayout mCurrentTextInputLayout = errorAccountManager.getCurrentTextInputLayout();
             if (mCurrentTextInputLayout != null) {
                 if (mCurrentTextInputLayout.isErrorEnabled()) {
                     mCurrentTextInputLayout.setError(null);
@@ -107,7 +107,7 @@ public class SignInFragment extends FragmentController {
         String password = etPassword.getText().toString();
         boolean isMan = rbMan.isChecked();
 
-        if (errorManager.allErrorSignIn(etMail, etName, etSurname, etPassword, etConfirmPassword)) {
+        if (errorAccountManager.allErrorSignIn(etMail, etName, etSurname, etPassword, etConfirmPassword)) {
             if (!cbCgu.isChecked()) {
               //  snackBarManager.show(getView(), errorCGU);
             } else {

@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * Created by hugo on 27/06/2015.
  */
 @EBean
-public class ErrorManager {
+public class ErrorAccountManager {
 
     private Pattern pattern;
     private TextInputLayout mCurrentTextInputLayout;

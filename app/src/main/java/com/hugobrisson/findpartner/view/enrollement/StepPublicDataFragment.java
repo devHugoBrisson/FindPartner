@@ -6,21 +6,12 @@ import android.app.Fragment;
 import org.androidannotations.annotations.res.StringRes;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -30,19 +21,16 @@ import com.hugobrisson.findpartner.R;
 
 
 import com.hugobrisson.findpartner.custom.ButtonProgress;
-import com.hugobrisson.findpartner.manager.ErrorManager;
+import com.hugobrisson.findpartner.manager.ErrorAccountManager;
 import com.hugobrisson.findpartner.manager.FragmentTransitionManager;
 import com.hugobrisson.findpartner.manager.SnackBarManager;
 import com.hugobrisson.findpartner.manager.UserManager;
 import com.hugobrisson.findpartner.model.User;
 import com.hugobrisson.findpartner.utils.DatePickerFragment;
 
-import com.rey.material.widget.RadioButton;
-
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -60,7 +48,7 @@ public class StepPublicDataFragment extends Fragment {
     FragmentTransitionManager fragmentManager;
 
     @Bean
-    ErrorManager errorManager;
+    ErrorAccountManager errorAccountManager;
 
     @Bean
     SnackBarManager snackBarManager;
@@ -162,7 +150,7 @@ public class StepPublicDataFragment extends Fragment {
         boolean isMan = true;
         boolean isWoman = true;
 
-        if (errorManager.allErrorForPublicData(getView(), birthDate, isMan, isWoman)) {
+        if (errorAccountManager.allErrorForPublicData(getView(), birthDate, isMan, isWoman)) {
             SimpleDateFormat textFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date myDate = null;
             try {

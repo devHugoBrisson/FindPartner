@@ -88,7 +88,7 @@ public class Event extends ParseObject {
         return getBoolean("isFree");
     }
 
-    public void setIsFree(Date value) {
+    public void setIsFree(boolean value) {
         put("isFree", value);
     }
 

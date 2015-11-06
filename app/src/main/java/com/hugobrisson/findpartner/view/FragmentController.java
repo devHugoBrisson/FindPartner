@@ -1,17 +1,14 @@
 package com.hugobrisson.findpartner.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
 
-import com.hugobrisson.findpartner.manager.ErrorManager;
-import com.hugobrisson.findpartner.manager.FragmentTransitionManager;
+import com.hugobrisson.findpartner.manager.ErrorAccountManager;
 import com.hugobrisson.findpartner.manager.SnackBarManager;
 import com.hugobrisson.findpartner.manager.UserManager;
 import com.hugobrisson.findpartner.utils.ActivityListener;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 
@@ -24,7 +21,7 @@ public class FragmentController extends Fragment {
     protected ActivityListener mActivityListener;
 
     @Bean
-    protected ErrorManager errorManager;
+    protected ErrorAccountManager errorAccountManager;
 
     @Bean
     protected UserManager userManager;

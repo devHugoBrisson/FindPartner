@@ -29,8 +29,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="MyAutoCompleteTextView" parent="android:Widget.Holo.Light.AutoCompleteTextView">
-    </style>
+    <style name="MyAutoCompleteTextView" parent="android:Widget.Holo.Light.AutoCompleteTextView"></style>
 
     <style name="Til_Title" parent="Material.Widget.EditText">
         <item name="android:layout_marginLeft">10dp</item>
@@ -116,7 +115,7 @@
     </style>
 
     <style name="ButtonCircularProgressDrawableStyle" parent="Material.Drawable.CircularProgress">
-        <item name="cpd_strokeColor">@color/colorPrimaryDark</item>
+        <item name="cpd_strokeColor">@color/white</item>
     </style>
 
     <style name="CircularProgressStyle" parent="Material.Drawable.CircularProgress">

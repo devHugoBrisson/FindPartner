@@ -8,4 +8,5 @@
     <dimen name="textSizeConnect">18sp</dimen>
     <dimen name="drawablePadding">-35sp</dimen>
     <dimen name="title_dialog">24sp</dimen>
+    <dimen name="address_item">16sp</dimen>
 </resources>

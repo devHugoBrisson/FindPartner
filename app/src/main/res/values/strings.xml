@@ -67,6 +67,13 @@
     <string name="menu_exit">Quitter</string>
     <string name="event_title">Titre de l\'événement</string>
     <string name="tt_places">Adresse,Lieu</string>
+    <string name="error_no_sport">Aucun sport séléctionné</string>
+    <string name="error_no_date">Aucune date sélectionnée</string>
+    <string name="error_date_out">La date est déja passé</string>
+    <string name="error_time">Les horaires sont incorrecte</string>
+    <string name="error_no_place">Aucun lieu séléctionné</string>
+    <string name="error_partner">Le nombre de partenaire requis est incomplet</string>
+    <string name="error_price">Le prix ne doit pas être de 0</string>
 
 
     <array name="nav_title">

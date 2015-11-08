@@ -18,6 +18,7 @@ public class EventItem extends LinearLayout {
 
     private ImageView mIcon;
     private TextView mTextView;
+    private String mTitle;
 
     public EventItem(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,8 +36,11 @@ public class EventItem extends LinearLayout {
                 mIcon.setImageDrawable(icon);
             }
             mTextView.setText(text);
+            mTitle = text;
         }
     }
+
+    public String getTitle(){return mTitle;}
 
     public String getText() {
         return mTextView.getText().toString();

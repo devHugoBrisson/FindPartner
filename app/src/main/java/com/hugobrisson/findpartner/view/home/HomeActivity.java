@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.location.places.Place;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.adapter.NavAdapter;
 import com.hugobrisson.findpartner.manager.FragmentTransitionManager;
@@ -115,7 +116,6 @@ public class HomeActivity extends AppCompatActivity implements ActivityListener,
                 super.onDrawerOpened(drawerView);
             }
         };
-
         //Setting the actionbarToggle to drawer layout
         mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
 
@@ -187,5 +187,13 @@ public class HomeActivity extends AppCompatActivity implements ActivityListener,
                 getSupportFragmentManager().findFragmentByTag(CreateEventFragment_.class.getName());
 
         createEventFragment.updateSportItem(sport);
+    }
+
+    @Override
+    public void sendEventPlace(Place place) {
+        CreateEventFragment_ createEventFragment = (CreateEventFragment_)
+                getSupportFragmentManager().findFragmentByTag(CreateEventFragment_.class.getName());
+
+        createEventFragment.updateAddressItem(place);
     }
 }

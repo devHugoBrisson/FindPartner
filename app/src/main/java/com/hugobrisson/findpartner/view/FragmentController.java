@@ -1,7 +1,9 @@
 package com.hugobrisson.findpartner.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.view.inputmethod.InputMethodManager;
 
 
 import com.hugobrisson.findpartner.manager.ErrorAccountManager;
@@ -30,7 +32,6 @@ public class FragmentController extends Fragment {
     protected SnackBarManager snackBarManager;
 
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -39,5 +40,10 @@ public class FragmentController extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement ActivityListener");
         }
+    }
+
+    protected void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 }

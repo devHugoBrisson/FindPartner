@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:padding="20dp"
+        android:textColorHint="@color/white"
+        app:hintTextAppearance="@style/TilAppearence.Title">
+
+        <EditText
+            android:id="@+id/et_place_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rechercher un lieu"
+            android:inputType="text"
+            android:singleLine="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:theme="@style/Theme.EditText" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_place"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp" />
+
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress_wait"
+            style="@style/CircularProgressStyle"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            app:pv_autostart="false"
+            app:pv_circular="true"
+            app:pv_progressMode="indeterminate" />
+
+    </RelativeLayout>
+</LinearLayout>

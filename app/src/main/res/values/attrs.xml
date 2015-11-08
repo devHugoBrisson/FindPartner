@@ -5,7 +5,16 @@
     </declare-styleable>
 
     <declare-styleable name="EventItem">
-        <attr name="eventIcon" format="integer"/>
-        <attr name="eventText" format="string"/>
+        <attr name="eventIcon" format="integer" />
+        <attr name="eventText" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="EventDoubleItem">
+        <attr name="doubleEventIcon" format="integer" />
+        <attr name="eventFirstText" format="string" />
+        <attr name="eventSecondText" format="string" />
+        <attr name="eventSeparatorText" format="string" />
+    </declare-styleable>
+
+
 </resources>

@@ -59,7 +59,6 @@ public class StepPublicDataFragment extends Fragment {
     @ViewById(R.id.tt_birthdate)
     TextView ttBirthdate;
 
-    @ViewById(R.id.autoCompleteTextView)
     AutoCompleteTextView mAutoCompleteAdress;
 
     @ViewById(R.id.bt_progress)

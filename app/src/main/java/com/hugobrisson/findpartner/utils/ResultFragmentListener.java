@@ -1,5 +1,6 @@
 package com.hugobrisson.findpartner.utils;
 
+import com.google.android.gms.location.places.Place;
 import com.hugobrisson.findpartner.model.Sport;
 
 /**
@@ -7,4 +8,6 @@ import com.hugobrisson.findpartner.model.Sport;
  */
 public interface ResultFragmentListener {
     void sendEventSport(Sport sport);
+
+    void sendEventPlace(Place place);
 }

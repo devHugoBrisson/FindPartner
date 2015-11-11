@@ -74,6 +74,7 @@
     <string name="error_no_place">Aucun lieu séléctionné</string>
     <string name="error_partner">Le nombre de partenaire requis est incomplet</string>
     <string name="error_price">Le prix ne doit pas être de 0</string>
+    <string name="error_no_title">Aucun titre</string>
 
 
     <array name="nav_title">

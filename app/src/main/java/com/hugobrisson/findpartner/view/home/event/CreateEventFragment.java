@@ -2,12 +2,12 @@ package com.hugobrisson.findpartner.view.home.event;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.gms.location.places.Place;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.custom.EventDoubleItem;
 import com.hugobrisson.findpartner.custom.EventItem;
+import com.hugobrisson.findpartner.manager.ErrorEventManager;
 import com.hugobrisson.findpartner.manager.EventManager;
 import com.hugobrisson.findpartner.model.Event;
 import com.hugobrisson.findpartner.model.Sport;
@@ -19,6 +19,7 @@ import com.hugobrisson.findpartner.view.FragmentController;
 import com.hugobrisson.findpartner.view.common.PickerDialog;
 import com.hugobrisson.findpartner.view.home.location.FragmentAddressList_;
 import com.hugobrisson.findpartner.view.home.sport.FragmentSportList_;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.ProgressView;
@@ -73,7 +74,10 @@ public class CreateEventFragment extends FragmentController {
     @Bean
     EventManager eventManager;
 
-    private String[] mdataEvent = new String[6];
+    @Bean
+    ErrorEventManager errorEventManager;
+
+    private String[] mDataEvent = new String[6];
 
     private Sport mSport;
 
@@ -99,7 +103,7 @@ public class CreateEventFragment extends FragmentController {
 
         //restore old data
         int i = 0;
-        for (String data : mdataEvent) {
+        for (String data : mDataEvent) {
             if (data != null) {
                 restoreData(i, data);
             }
@@ -126,6 +130,7 @@ public class CreateEventFragment extends FragmentController {
                 showPickerDialog(priceItem, DialogType.NUMBER);
                 break;
             case R.id.bt_float_step:
+                clickSaveEvent();
                 break;
         }
     }
@@ -140,30 +145,43 @@ public class CreateEventFragment extends FragmentController {
     }
 
     private void clickSaveEvent() {
-        mEvent.setName(etTitleEvent.getText().toString());
-        mEvent.setDesc(etDescEvent.getText().toString());
-        mEvent.setOwnerId(ParseUser.getCurrentUser());
-        mEvent.setSportId(mSport);
-        // mEvent.setDateStart(concatDate(calendarItem.getText(), timeStartItem.getText()));
-        //mEvent.setDateEnd(concatDate(calendarItem.getText(), timeEndItem.getText()));
-        // mEvent.setNbPartner(Integer.parseInt(partnerMaxItem.getText()));
-        // mEvent.setNbAlreadyPartner(Integer.parseInt(partnerAlreadyItem.getText()));
-        mEvent.setIsFree(!cbFree.isChecked());
-        mEvent.setPrice(Integer.parseInt(priceItem.getText()));
+        String title = etTitleEvent.getText().toString();
+        title = title.replace(title.substring(0, 1), title.substring(0, 1).toUpperCase());
+        String desc = etDescEvent.getText().toString();
+        desc = desc.replace(desc.substring(0, 1), desc.substring(0, 1).toUpperCase());
 
-        //TODO if error
-        eventManager.saveServer(mEvent, new IParseCallBack() {
-            @Override
-            public void onSuccess() {
-                getActivity().getSupportFragmentManager().popBackStack();
+        if (errorEventManager.errorEvent(getView(), title, mSport, calendarItem, timeItem, mPlace, partnerItem, cbFree.isChecked(), priceItem)) {
+            progressView.start();
+            mEvent.setName(title);
+            mEvent.setDesc(desc);
+            mEvent.setOwnerId(ParseUser.getCurrentUser());
+            mEvent.setSportId(mSport);
+            mEvent.setDateStart(concatDate(calendarItem.getText(), timeItem.getText(true)));
+            mEvent.setDateEnd(concatDate(calendarItem.getText(), timeItem.getText(false)));
+            mEvent.setAddress(mPlace.getAddress().toString());
+            mEvent.setLocation(new ParseGeoPoint(mPlace.getLatLng().latitude, mPlace.getLatLng().longitude));
+            mEvent.setNbAlreadyPartner(Integer.parseInt(partnerItem.getText(true)));
+            mEvent.setNbPartner(Integer.parseInt(partnerItem.getText(false)));
+            mEvent.setIsFree(!cbFree.isChecked());
+            if (cbFree.isChecked()) {
+                mEvent.setPrice(Integer.parseInt(priceItem.getText()));
+            } else {
+                mEvent.setPrice(0);
             }
+            //TODO if error
+            eventManager.saveServer(mEvent, new IParseCallBack() {
+                @Override
+                public void onSuccess() {
+                    progressView.stop();
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
 
-            @Override
-            public void onFailure() {
-
-            }
-        });
-
+                @Override
+                public void onFailure() {
+                    progressView.stop();
+                }
+            });
+        }
     }
 
     /**
@@ -173,12 +191,15 @@ public class CreateEventFragment extends FragmentController {
         mSport = sport;
     }
 
+    /**
+     * @param place
+     */
     public void updateAddressItem(Place place) {
         mPlace = place;
     }
 
     private Date concatDate(String date, String time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         Date convertedDate = new Date();
         try {
             convertedDate = dateFormat.parse(date + " " + time);
@@ -197,7 +218,8 @@ public class CreateEventFragment extends FragmentController {
         days = String.valueOf(day);
         if (months.length() == 1) {
             months = "0" + month;
-        } else if (days.length() == 1) {
+        }
+        if (days.length() == 1) {
             days = "0" + day;
         }
         return String.valueOf(days) + "/" + (months) + "/" + year;
@@ -210,14 +232,16 @@ public class CreateEventFragment extends FragmentController {
         minutes = String.valueOf(minute);
         if (hours.length() == 1) {
             hours = "0" + hours;
-        } else if (minutes.length() == 1) {
+        }
+        if (minutes.length() == 1) {
             minutes = "0" + minutes;
         }
         return String.valueOf(hours) + ":" + (minutes);
     }
 
-
     /**
+     * show dialog depending to dialogType.
+     *
      * @param eventItem
      * @param dialogType
      */
@@ -226,7 +250,7 @@ public class CreateEventFragment extends FragmentController {
             @Override
             public void onResultDatePicker(int day, int month, int year) {
                 eventItem.setText(formatDate(day, month, year));
-                mdataEvent[0] = eventItem.getText();
+                mDataEvent[0] = eventItem.getText();
             }
 
             @Override
@@ -237,7 +261,7 @@ public class CreateEventFragment extends FragmentController {
             @Override
             public void onResultNumberPicker(int number) {
                 eventItem.setText(String.valueOf(number));
-                mdataEvent[5] = eventItem.getText();
+                mDataEvent[5] = eventItem.getText();
             }
         });
         pickerDialog.show();
@@ -245,6 +269,8 @@ public class CreateEventFragment extends FragmentController {
     }
 
     /**
+     * show dialog depending to dialogType.
+     *
      * @param dialogType
      */
     private void showPickerDialogDoubleEvent(DialogType dialogType, final boolean isFirstEvent) {
@@ -257,10 +283,10 @@ public class CreateEventFragment extends FragmentController {
             public void onResultTimePicker(int hour, int minute) {
                 if (isFirstEvent) {
                     timeItem.setText(formatTime(hour, minute), true);
-                    mdataEvent[1] = timeItem.getText(true);
+                    mDataEvent[1] = timeItem.getText(true);
                 } else {
                     timeItem.setText(formatTime(hour, minute), false);
-                    mdataEvent[2] = timeItem.getText(false);
+                    mDataEvent[2] = timeItem.getText(false);
                 }
             }
 
@@ -268,10 +294,10 @@ public class CreateEventFragment extends FragmentController {
             public void onResultNumberPicker(int number) {
                 if (isFirstEvent) {
                     partnerItem.setText(String.valueOf(number), true);
-                    mdataEvent[3] = partnerItem.getText(true);
+                    mDataEvent[3] = partnerItem.getText(true);
                 } else {
                     partnerItem.setText(String.valueOf(number), false);
-                    mdataEvent[4] = partnerItem.getText(false);
+                    mDataEvent[4] = partnerItem.getText(false);
                 }
             }
         });
@@ -279,6 +305,12 @@ public class CreateEventFragment extends FragmentController {
 
     }
 
+    /**
+     * restore old data before losted focus .
+     *
+     * @param i
+     * @param data
+     */
     private void restoreData(int i, String data) {
         switch (i) {
             case 0:

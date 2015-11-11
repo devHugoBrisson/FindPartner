@@ -29,9 +29,7 @@ public class FragmentTransitionManager {
         fragmentTransaction.commit();
     }
 
-    public void changeFragment(FragmentManager fragmentManager, Fragment contextFragment, Fragment fragment, String extra) {
-        Bundle bundle = new Bundle();
-        bundle.putString("objectId", extra);
+    public void changeFragment(FragmentManager fragmentManager, Fragment contextFragment, Fragment fragment, Bundle bundle) {
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frame_layout, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

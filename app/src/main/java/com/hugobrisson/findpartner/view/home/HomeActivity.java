@@ -57,8 +57,6 @@ public class HomeActivity extends AppCompatActivity implements ActivityListener,
 
     private List<NavItem> mNavItems;
 
-    private RecyclerView.LayoutManager mLayoutManager;
-
     @AfterViews
     void configure() {
         // Initializing Toolbar and setting it as the actionbar
@@ -99,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityListener,
         mRecyclerView.setAdapter(navAdapter);
 
 
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         // Initializing Drawer Layout and ActionBarToggle
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open_drawer, R.string.close_drawer) {

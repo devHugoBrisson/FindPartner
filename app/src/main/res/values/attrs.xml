@@ -16,5 +16,8 @@
         <attr name="eventSeparatorText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="TMImageView">
+        <attr name="colorIcon" format="integer" />
+    </declare-styleable>
 
 </resources>

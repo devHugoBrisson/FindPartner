@@ -3,6 +3,7 @@ package com.hugobrisson.findpartner;
 import android.app.Application;
 
 import com.hugobrisson.findpartner.model.Event;
+import com.hugobrisson.findpartner.model.EventUser;
 import com.hugobrisson.findpartner.model.Sport;
 import com.hugobrisson.findpartner.model.SportUser;
 import com.hugobrisson.findpartner.model.User;
@@ -27,6 +28,7 @@ public class FindPartnerApplication extends Application {
         ParseObject.registerSubclass(Sport.class);
         ParseObject.registerSubclass(SportUser.class);
         ParseObject.registerSubclass(Event.class);
+        ParseObject.registerSubclass(EventUser.class);
         Parse.initialize(this, "rXJMbD8EdTILYOtf8yIOWOuH6QED98JMaQlWH0lp", "F6mrFQQRvx89CXX1rRNLuXnOBmqjDN20c70zFubT");
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }

@@ -23,7 +23,6 @@ import java.util.Calendar;
  */
 public class PickerDialog extends Dialog {
 
-    private Context mContext;
     private String mTitle;
     private IDialogCallBack mIDialogCallBack;
     private DialogType mDialogType;
@@ -98,7 +97,7 @@ public class PickerDialog extends Dialog {
             }
         });
         textView.setText(mTitle);
-        numberPicker.setMaxValue(20); // max value 100
+        numberPicker.setMaxValue(100); // max value 100
         numberPicker.setMinValue(0);   // min value 0
         numberPicker.setWrapSelectorWheel(false);
     }

@@ -79,7 +79,7 @@
                 android:id="@+id/calendar_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:eventIcon="@mipmap/ic_calendar"
+                app:eventIcon="@mipmap/ic_cal"
                 app:eventText="Date de l'èvénement ?" />
 
             <com.hugobrisson.findpartner.custom.EventDoubleItem
@@ -108,7 +108,7 @@
                 app:eventSeparatorText="/" />
 
             <com.rey.material.widget.CheckBox
-                android:id="@+id/cb_free"
+                android:id="@+id/cb_payable"
                 style="@style/CheckBoxDrawable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

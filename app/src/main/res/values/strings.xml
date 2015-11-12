@@ -75,6 +75,14 @@
     <string name="error_partner">Le nombre de partenaire requis est incomplet</string>
     <string name="error_price">Le prix ne doit pas être de 0</string>
     <string name="error_no_title">Aucun titre</string>
+    <string name="event_dialog_title_date">Choisir une date</string>
+    <string name="event_dialog_title_start_time">Heure de début</string>
+    <string name="event_dialog_title_end_time">Heure de fin</string>
+    <string name="event_dialog_title_already_partner">Partenaires déjà trouvés</string>
+    <string name="event_dialog_title_max_partner">Partenaires maximum</string>
+    <string name="event_dialog_title_price">Prix</string>
+    <string name="search_sport">Rechercher un sport</string>
+    <string name="search_place">Rechercher un lieu</string>
 
 
     <array name="nav_title">

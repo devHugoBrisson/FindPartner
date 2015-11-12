@@ -84,12 +84,12 @@ public class Event extends ParseObject {
         put("EndDate", value);
     }
 
-    public boolean IsFree() {
-        return getBoolean("isFree");
+    public boolean isPayable() {
+        return getBoolean("isPayable");
     }
 
-    public void setIsFree(boolean value) {
-        put("isFree", value);
+    public void setIsPayable(boolean value) {
+        put("isPayable", value);
     }
 
     public int getNbPartner() {

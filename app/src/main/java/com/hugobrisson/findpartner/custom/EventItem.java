@@ -37,6 +37,8 @@ public class EventItem extends LinearLayout {
             }
             mTextView.setText(text);
             mTitle = text;
+
+            a.recycle();
         }
     }
 

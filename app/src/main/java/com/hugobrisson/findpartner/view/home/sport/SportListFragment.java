@@ -10,10 +10,8 @@ import android.widget.EditText;
 
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.adapter.SportAdapter;
-import com.hugobrisson.findpartner.adapter.SportAdapterGrid;
 import com.hugobrisson.findpartner.manager.SportManager;
 import com.hugobrisson.findpartner.model.Sport;
-import com.hugobrisson.findpartner.utils.ActivityListener;
 import com.hugobrisson.findpartner.utils.IParseObjectListener;
 import com.hugobrisson.findpartner.utils.ISportCallBack;
 import com.hugobrisson.findpartner.utils.ResultFragmentListener;
@@ -24,7 +22,6 @@ import com.rey.material.widget.ProgressView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -33,10 +30,10 @@ import java.util.List;
  * Created by hugo on 04/11/2015.
  */
 @EFragment(R.layout.fragment_sport_list)
-public class FragmentSportList extends FragmentController {
+public class SportListFragment extends FragmentController {
 
 
-    @ViewById(R.id.et_search)
+    @ViewById(R.id.et_search_sport)
     EditText etSearch;
 
     @ViewById(R.id.list_sport)

@@ -6,65 +6,37 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompletePrediction;
-import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.PlacePhotoResult;
-import com.google.android.gms.location.places.PlaceTypes;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.internal.AutocompletePredictionEntity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.adapter.PlaceAdapter;
-import com.hugobrisson.findpartner.adapter.PlaceArrayAdapter;
-import com.hugobrisson.findpartner.adapter.SportAdapter;
-import com.hugobrisson.findpartner.manager.SportManager;
 import com.hugobrisson.findpartner.model.PlaceAutocomplete;
-import com.hugobrisson.findpartner.model.Sport;
-import com.hugobrisson.findpartner.utils.IParseObjectListener;
-import com.hugobrisson.findpartner.utils.IPlaceCallBack;
 import com.hugobrisson.findpartner.utils.IPlaceListener;
-import com.hugobrisson.findpartner.utils.ISportCallBack;
 import com.hugobrisson.findpartner.utils.ResultFragmentListener;
 import com.hugobrisson.findpartner.view.FragmentController;
-import com.hugobrisson.findpartner.view.home.HomeActivity_;
-import com.parse.ParseObject;
 import com.rey.material.widget.ProgressView;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hugo on 04/11/2015.
  */
 @EFragment(R.layout.fragment_address_list)
-public class FragmentAddressList extends FragmentController {
+public class AddressListFragment extends FragmentController {
 
-    @ViewById(R.id.et_place_event)
+    @ViewById(R.id.et_search_place)
     EditText mSearchPlace;
 
     @ViewById(R.id.list_place)

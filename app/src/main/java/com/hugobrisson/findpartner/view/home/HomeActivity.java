@@ -26,7 +26,8 @@ import com.hugobrisson.findpartner.utils.ActivityListener;
 import com.hugobrisson.findpartner.utils.DrawerListener;
 import com.hugobrisson.findpartner.utils.ResultFragmentListener;
 import com.hugobrisson.findpartner.view.home.event.CreateEventFragment_;
-import com.hugobrisson.findpartner.view.home.event.MyEventsFragment_;
+import com.hugobrisson.findpartner.view.home.event.EventFragment;
+import com.hugobrisson.findpartner.view.home.event.EventFragment_;
 import com.parse.ParseUser;
 
 import org.androidannotations.annotations.AfterViews;
@@ -76,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityListener,
                         break;
                     //Events
                     case 3:
-                        fragment = new MyEventsFragment_();
+                        fragment = new EventFragment_();
                         break;
                     //Partner
                     case 4:

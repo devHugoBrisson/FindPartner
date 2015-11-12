@@ -11,14 +11,15 @@ import com.hugobrisson.findpartner.manager.ErrorEventManager;
 import com.hugobrisson.findpartner.manager.EventManager;
 import com.hugobrisson.findpartner.model.Event;
 import com.hugobrisson.findpartner.model.Sport;
+import com.hugobrisson.findpartner.utils.DateConverter;
 import com.hugobrisson.findpartner.utils.DialogType;
 import com.hugobrisson.findpartner.utils.IDialogCallBack;
 import com.hugobrisson.findpartner.utils.IDoubleEventListener;
 import com.hugobrisson.findpartner.utils.IParseCallBack;
 import com.hugobrisson.findpartner.view.FragmentController;
 import com.hugobrisson.findpartner.view.common.PickerDialog;
-import com.hugobrisson.findpartner.view.home.location.FragmentAddressList_;
-import com.hugobrisson.findpartner.view.home.sport.FragmentSportList_;
+import com.hugobrisson.findpartner.view.home.location.AddressListFragment_;
+import com.hugobrisson.findpartner.view.home.sport.SportListFragment_;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.rey.material.widget.CheckBox;
@@ -30,6 +31,7 @@ import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringRes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,11 +67,29 @@ public class CreateEventFragment extends FragmentController {
     @ViewById(R.id.address_item)
     EventItem addressItem;
 
-    @ViewById(R.id.cb_free)
-    CheckBox cbFree;
+    @ViewById(R.id.cb_payable)
+    CheckBox cbPayable;
 
     @ViewById(R.id.progress_wait)
     ProgressView progressView;
+
+    @StringRes(R.string.event_dialog_title_date)
+    String titleDate;
+
+    @StringRes(R.string.event_dialog_title_start_time)
+    String titleStartTime;
+
+    @StringRes(R.string.event_dialog_title_end_time)
+    String titleEndTime;
+
+    @StringRes(R.string.event_dialog_title_already_partner)
+    String titleAlreadyPartner;
+
+    @StringRes(R.string.event_dialog_title_max_partner)
+    String titleMaxPartner;
+
+    @StringRes(R.string.event_dialog_title_price)
+    String titlePrice;
 
     @Bean
     EventManager eventManager;
@@ -118,16 +138,16 @@ public class CreateEventFragment extends FragmentController {
     void clickEventItem(View view) {
         switch (view.getId()) {
             case R.id.sport_item:
-                mActivityListener.changeFragment(new FragmentSportList_());
+                mActivityListener.changeFragment(new SportListFragment_());
                 break;
             case R.id.calendar_item:
-                showPickerDialog(calendarItem, DialogType.CALENDAR);
+                showPickerDialog(calendarItem, DialogType.CALENDAR, titleDate);
                 break;
             case R.id.address_item:
-                mActivityListener.changeFragment(new FragmentAddressList_());
+                mActivityListener.changeFragment(new AddressListFragment_());
                 break;
             case R.id.price_item:
-                showPickerDialog(priceItem, DialogType.NUMBER);
+                showPickerDialog(priceItem, DialogType.NUMBER, titlePrice);
                 break;
             case R.id.bt_float_step:
                 clickSaveEvent();
@@ -135,7 +155,7 @@ public class CreateEventFragment extends FragmentController {
         }
     }
 
-    @CheckedChange(R.id.cb_free)
+    @CheckedChange(R.id.cb_payable)
     void check(boolean isCheck) {
         if (isCheck) {
             priceItem.setVisibility(View.VISIBLE);
@@ -146,29 +166,29 @@ public class CreateEventFragment extends FragmentController {
 
     private void clickSaveEvent() {
         String title = etTitleEvent.getText().toString();
-        title = title.replace(title.substring(0, 1), title.substring(0, 1).toUpperCase());
         String desc = etDescEvent.getText().toString();
-        desc = desc.replace(desc.substring(0, 1), desc.substring(0, 1).toUpperCase());
 
-        if (errorEventManager.errorEvent(getView(), title, mSport, calendarItem, timeItem, mPlace, partnerItem, cbFree.isChecked(), priceItem)) {
+        if (errorEventManager.errorEvent(getView(), title, mSport, calendarItem, timeItem, mPlace, partnerItem, cbPayable.isChecked(), priceItem)) {
             progressView.start();
+
+            title = title.toUpperCase();
             mEvent.setName(title);
             mEvent.setDesc(desc);
             mEvent.setOwnerId(ParseUser.getCurrentUser());
             mEvent.setSportId(mSport);
-            mEvent.setDateStart(concatDate(calendarItem.getText(), timeItem.getText(true)));
-            mEvent.setDateEnd(concatDate(calendarItem.getText(), timeItem.getText(false)));
+            mEvent.setDateStart(DateConverter.concatDate(calendarItem.getText(), timeItem.getText(true)));
+            mEvent.setDateEnd(DateConverter.concatDate(calendarItem.getText(), timeItem.getText(false)));
             mEvent.setAddress(mPlace.getAddress().toString());
             mEvent.setLocation(new ParseGeoPoint(mPlace.getLatLng().latitude, mPlace.getLatLng().longitude));
             mEvent.setNbAlreadyPartner(Integer.parseInt(partnerItem.getText(true)));
             mEvent.setNbPartner(Integer.parseInt(partnerItem.getText(false)));
-            mEvent.setIsFree(!cbFree.isChecked());
-            if (cbFree.isChecked()) {
+            mEvent.setIsPayable(cbPayable.isChecked());
+            if (cbPayable.isChecked()) {
                 mEvent.setPrice(Integer.parseInt(priceItem.getText()));
             } else {
                 mEvent.setPrice(0);
             }
-            //TODO if error
+
             eventManager.saveServer(mEvent, new IParseCallBack() {
                 @Override
                 public void onSuccess() {
@@ -198,64 +218,23 @@ public class CreateEventFragment extends FragmentController {
         mPlace = place;
     }
 
-    private Date concatDate(String date, String time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        Date convertedDate = new Date();
-        try {
-            convertedDate = dateFormat.parse(date + " " + time);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return convertedDate;
-    }
-
-    private String formatDate(int day, int month, int year) {
-        String months;
-        String days;
-        month++;
-        months = String.valueOf(month);
-        days = String.valueOf(day);
-        if (months.length() == 1) {
-            months = "0" + month;
-        }
-        if (days.length() == 1) {
-            days = "0" + day;
-        }
-        return String.valueOf(days) + "/" + (months) + "/" + year;
-    }
-
-    private String formatTime(int hour, int minute) {
-        String hours;
-        String minutes;
-        hours = String.valueOf(hour);
-        minutes = String.valueOf(minute);
-        if (hours.length() == 1) {
-            hours = "0" + hours;
-        }
-        if (minutes.length() == 1) {
-            minutes = "0" + minutes;
-        }
-        return String.valueOf(hours) + ":" + (minutes);
-    }
-
     /**
      * show dialog depending to dialogType.
      *
      * @param eventItem
      * @param dialogType
      */
-    private void showPickerDialog(final EventItem eventItem, DialogType dialogType) {
-        PickerDialog pickerDialog = new PickerDialog(getActivity(), dialogType, "Partenaire ", new IDialogCallBack() {
+    private void showPickerDialog(final EventItem eventItem, DialogType dialogType, String title) {
+        PickerDialog pickerDialog = new PickerDialog(getActivity(), dialogType, title, new IDialogCallBack() {
             @Override
             public void onResultDatePicker(int day, int month, int year) {
-                eventItem.setText(formatDate(day, month, year));
+                eventItem.setText(DateConverter.formatDate(day, month, year));
                 mDataEvent[0] = eventItem.getText();
             }
 
             @Override
             public void onResultTimePicker(int hour, int minute) {
-                eventItem.setText(formatTime(hour, minute));
+                eventItem.setText(DateConverter.formatTime(hour, minute));
             }
 
             @Override
@@ -274,7 +253,26 @@ public class CreateEventFragment extends FragmentController {
      * @param dialogType
      */
     private void showPickerDialogDoubleEvent(DialogType dialogType, final boolean isFirstEvent) {
-        PickerDialog pickerDialog = new PickerDialog(getActivity(), dialogType, "Partenaire ", new IDialogCallBack() {
+        String title = null;
+
+        switch (dialogType) {
+            case TIME:
+                if (isFirstEvent) {
+                    title = titleStartTime;
+                } else {
+                    title = titleEndTime;
+                }
+                break;
+            case NUMBER:
+                if (isFirstEvent) {
+                    title = titleAlreadyPartner;
+                } else {
+                    title = titleMaxPartner;
+                }
+                break;
+        }
+
+        PickerDialog pickerDialog = new PickerDialog(getActivity(), dialogType, title, new IDialogCallBack() {
             @Override
             public void onResultDatePicker(int day, int month, int year) {
             }
@@ -282,10 +280,10 @@ public class CreateEventFragment extends FragmentController {
             @Override
             public void onResultTimePicker(int hour, int minute) {
                 if (isFirstEvent) {
-                    timeItem.setText(formatTime(hour, minute), true);
+                    timeItem.setText(DateConverter.formatTime(hour, minute), true);
                     mDataEvent[1] = timeItem.getText(true);
                 } else {
-                    timeItem.setText(formatTime(hour, minute), false);
+                    timeItem.setText(DateConverter.formatTime(hour, minute), false);
                     mDataEvent[2] = timeItem.getText(false);
                 }
             }

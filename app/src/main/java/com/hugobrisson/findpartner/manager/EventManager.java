@@ -60,9 +60,9 @@ public class EventManager {
 
     private void getMyEvents(final IEventCallBack iEventCallBack) {
         ParseQuery<Event> query = new ParseQuery<>(Event.class);
-       query.whereEqualTo("OwnerID", ParseUser.getCurrentUser());
-       query.whereGreaterThan("EndDate", Calendar.getInstance().getTime());
-       query.orderByAscending("StartDate");
+        query.whereEqualTo("OwnerID", ParseUser.getCurrentUser());
+        query.whereGreaterThan("EndDate", Calendar.getInstance().getTime());
+        query.orderByAscending("StartDate");
         query.findInBackground(new FindCallback<Event>() {
             @Override
             public void done(List<Event> list, ParseException e) {
@@ -169,6 +169,21 @@ public class EventManager {
         ParseQuery<Event> query = new ParseQuery<>(Event.class);
         query.fromLocalDatastore();
         query.fromPin(eventTag.toString());
+        query.findInBackground(new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> list, ParseException e) {
+                if (e == null) {
+                    iEventCallBack.getEvents(list);
+                }
+            }
+        });
+    }
+
+    public void getEventLocalById(EventTag eventTag, String objectId, final IEventCallBack iEventCallBack) {
+        ParseQuery<Event> query = new ParseQuery<>(Event.class);
+        query.fromLocalDatastore();
+        query.fromPin(eventTag.toString());
+        query.whereEqualTo("objectId", objectId);
         query.findInBackground(new FindCallback<Event>() {
             @Override
             public void done(List<Event> list, ParseException e) {

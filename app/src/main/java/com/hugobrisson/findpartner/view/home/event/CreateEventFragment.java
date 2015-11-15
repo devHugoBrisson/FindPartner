@@ -15,6 +15,7 @@ import com.hugobrisson.findpartner.utils.DateConverter;
 import com.hugobrisson.findpartner.utils.DialogType;
 import com.hugobrisson.findpartner.utils.IDialogCallBack;
 import com.hugobrisson.findpartner.utils.IDoubleEventListener;
+import com.hugobrisson.findpartner.utils.IEventCallBack;
 import com.hugobrisson.findpartner.utils.IParseCallBack;
 import com.hugobrisson.findpartner.view.FragmentController;
 import com.hugobrisson.findpartner.view.common.PickerDialog;
@@ -25,21 +26,18 @@ import com.parse.ParseUser;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.ProgressView;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
-/**
- * Created by hugo on 04/11/2015.
- */
 @EFragment(R.layout.fragment_create_event)
 public class CreateEventFragment extends FragmentController {
 
@@ -97,6 +95,9 @@ public class CreateEventFragment extends FragmentController {
     @Bean
     ErrorEventManager errorEventManager;
 
+    @FragmentArg("objectId")
+    String objectId;
+
     private String[] mDataEvent = new String[6];
 
     private Sport mSport;
@@ -112,22 +113,28 @@ public class CreateEventFragment extends FragmentController {
         }
     };
 
+    @AfterInject
+    void create() {
+        if (objectId != null) {
+            eventManager.getEventLocalById(EventManager.EventTag.MINE, objectId, new IEventCallBack() {
+                @Override
+                public void getEvents(List<Event> events) {
+                    if (events.size() != 0) {
+                        mEvent = events.get(0);
+                        mSport = (Sport) mEvent.getParseObject("SportID");
+                        configure();
+                    }
+                }
+            });
+        }
+    }
+
     @AfterViews
     void configure() {
-        if (mSport != null) {
-            sportItem.setText(mSport.getName());
-        }
-        if (mPlace != null) {
-            addressItem.setText(mPlace.getName().toString());
-        }
-
-        //restore old data
-        int i = 0;
-        for (String data : mDataEvent) {
-            if (data != null) {
-                restoreData(i, data);
-            }
-            i++;
+        if (mEvent.getObjectId() != null && objectId != null) {
+            initWithEvent();
+        } else {
+            init();
         }
 
         timeItem.setListenerAndDialogType(mIDoubleEventListener, DialogType.TIME);
@@ -164,6 +171,52 @@ public class CreateEventFragment extends FragmentController {
         }
     }
 
+    /**
+     *
+     */
+    private void initWithEvent() {
+        etTitleEvent.setText(mEvent.getName());
+        etDescEvent.setText(mEvent.getDesc());
+        sportItem.setText(mSport.getName());
+        calendarItem.setText(DateConverter.dateToString(mEvent.getDateStart()));
+        timeItem.setText(DateConverter.timeToString(mEvent.getDateStart()), true);
+        timeItem.setText(DateConverter.timeToString(mEvent.getDateEnd()), false);
+        addressItem.setText(mEvent.getAddress());
+        partnerItem.setText(String.valueOf(mEvent.getNbAlreadyPartner()), true);
+        partnerItem.setText(String.valueOf(mEvent.getNbPartner()), false);
+        if (mEvent.isPayable()) {
+            cbPayable.setChecked(mEvent.isPayable());
+            priceItem.setVisibility(View.VISIBLE);
+            priceItem.setText(String.valueOf(mEvent.getPrice()));
+        }
+
+        objectId = null;
+    }
+
+    /**
+     *
+     */
+    private void init() {
+        if (mEvent.getSportId() != null) {
+            sportItem.setText(mSport.getName());
+        }
+        if (mEvent.getAddress() != null) {
+            addressItem.setText(mEvent.getAddress());
+        }
+
+        //restore old data
+        int i = 0;
+        for (String data : mDataEvent) {
+            if (data != null) {
+                restoreData(i, data);
+            }
+            i++;
+        }
+    }
+
+    /**
+     *
+     */
     private void clickSaveEvent() {
         String title = etTitleEvent.getText().toString();
         String desc = etDescEvent.getText().toString();
@@ -175,11 +228,8 @@ public class CreateEventFragment extends FragmentController {
             mEvent.setName(title);
             mEvent.setDesc(desc);
             mEvent.setOwnerId(ParseUser.getCurrentUser());
-            mEvent.setSportId(mSport);
             mEvent.setDateStart(DateConverter.concatDate(calendarItem.getText(), timeItem.getText(true)));
             mEvent.setDateEnd(DateConverter.concatDate(calendarItem.getText(), timeItem.getText(false)));
-            mEvent.setAddress(mPlace.getAddress().toString());
-            mEvent.setLocation(new ParseGeoPoint(mPlace.getLatLng().latitude, mPlace.getLatLng().longitude));
             mEvent.setNbAlreadyPartner(Integer.parseInt(partnerItem.getText(true)));
             mEvent.setNbPartner(Integer.parseInt(partnerItem.getText(false)));
             mEvent.setIsPayable(cbPayable.isChecked());
@@ -208,6 +258,7 @@ public class CreateEventFragment extends FragmentController {
      * @param sport
      */
     public void updateSportItem(Sport sport) {
+        mEvent.setSportId(sport);
         mSport = sport;
     }
 
@@ -215,7 +266,8 @@ public class CreateEventFragment extends FragmentController {
      * @param place
      */
     public void updateAddressItem(Place place) {
-        mPlace = place;
+        mEvent.setAddress(place.getAddress().toString());
+        mEvent.setLocation(new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude));
     }
 
     /**

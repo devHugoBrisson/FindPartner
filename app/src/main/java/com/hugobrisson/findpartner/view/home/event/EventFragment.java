@@ -16,9 +16,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-/**
- * Created by hugo on 04/11/2015.
- */
 @EFragment(R.layout.fragment_tab_event)
 public class EventFragment extends FragmentController {
 

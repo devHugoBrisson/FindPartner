@@ -1,15 +1,15 @@
 package com.hugobrisson.findpartner.view.home.event;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.hugobrisson.findpartner.R;
 import com.hugobrisson.findpartner.adapter.EventAdapter;
-import com.hugobrisson.findpartner.adapter.SportAdapter;
 import com.hugobrisson.findpartner.manager.EventManager;
 import com.hugobrisson.findpartner.model.Event;
-import com.hugobrisson.findpartner.model.Sport;
 import com.hugobrisson.findpartner.utils.IEventCallBack;
 import com.hugobrisson.findpartner.utils.IParseObjectListener;
 import com.hugobrisson.findpartner.utils.Tools;
@@ -21,16 +21,12 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by hugo on 11/11/2015.
- */
 @EFragment(R.layout.fragment_list_global)
 public class EventListFragment extends FragmentController {
 
@@ -55,15 +51,22 @@ public class EventListFragment extends FragmentController {
     private IParseObjectListener mIParseObjectListener = new IParseObjectListener() {
         @Override
         public void onItemCLick(ParseObject parseObject) {
-            Event event = (Event) parseObject;
+            Fragment fragment = null;
+            Bundle bundle = new Bundle();
             switch (mEventTag) {
                 case MINE:
+                    fragment = new CreateEventFragment_();
                     break;
                 case FUTURE:
                     break;
                 case WAITING:
                     break;
             }
+            bundle.putString("objectId", parseObject.getObjectId());
+            if (fragment != null) {
+                fragment.setArguments(bundle);
+            }
+            mActivityListener.changeFragment(fragment);
         }
     };
 
@@ -76,21 +79,20 @@ public class EventListFragment extends FragmentController {
     @AfterViews()
     void configure() {
         mProgressView.start();
-        EventManager.EventTag eventTag = null;
         switch (typeEvent) {
             case 1:
-                eventTag = EventManager.EventTag.MINE;
+                mEventTag = EventManager.EventTag.MINE;
                 break;
             case 2:
-                eventTag = EventManager.EventTag.FUTURE;
+                mEventTag = EventManager.EventTag.FUTURE;
                 break;
             case 3:
-                eventTag = EventManager.EventTag.WAITING;
+                mEventTag = EventManager.EventTag.WAITING;
                 break;
 
         }
 
-        eventManager.getEventLocal(eventTag, new IEventCallBack() {
+        eventManager.getEventLocal(mEventTag, new IEventCallBack() {
             @Override
             public void getEvents(List<Event> events) {
                 if (events.size() > 0) {
@@ -100,7 +102,7 @@ public class EventListFragment extends FragmentController {
         });
 
         if (Tools.isNetworkAvailable(getActivity())) {
-            eventManager.getFromServer(eventTag, new IEventCallBack() {
+            eventManager.getFromServer(mEventTag, new IEventCallBack() {
                 @Override
                 public void getEvents(List<Event> events) {
                     if (events.size() > 0) {

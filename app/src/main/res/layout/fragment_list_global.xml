@@ -9,7 +9,7 @@
         android:id="@+id/rv_global"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:background="@color/background_list"
         android:padding="10dp">
 
     </android.support.v7.widget.RecyclerView>
